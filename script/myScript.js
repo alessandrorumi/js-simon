@@ -8,37 +8,68 @@ const randomNumbers = document.getElementById('numbers');
 // Dichiarazione Start Timer
 const secondsLeft = document.getElementById('reminder');
 
-// Dichiarazione tasto genera
+// Dichiarazione pulsante genera
 const generateButton = document.getElementById('generate');
 
-// Al click del tasto genera
+// Dichiarazione prova ad indovinare
+const tryToGuess = document.getElementById('try');
+tryToGuess.classList.add('hidden');
+
+// Dichiarazione input text (indovina numero)
+const guessNumber = document.getElementById('guess');
+guessNumber.classList.add('hidden');
+
+// Dichiarazione pulsante 'Invia Numeri'
+const userGuess = document.getElementById('user-guess');
+userGuess.classList.add('hidden');
+
+// Al click del pulsante genera
 generateButton.addEventListener('click', function() {
 
-  // Genera (5) numeri casuali (da 1 a 10)
+  // Genera (5) numeri casuali (da 1 a 100)
   const numbersToRemember = getRandomNumbers(1, 100, 5);
 
   // Timer di 30 secondi
-  let seconds = 30;
-  
+  let seconds = 5;
+
   countDown = setInterval(function() {
-    
-    if (seconds <= 1) {
-      clearInterval(countDown);
-      
-      secondsLeft.classList.add('hidden');
-      randomNumbers.classList.add('hidden');
-      
-    } else {
-      seconds--
-    }
     
     // Mostra in html
     randomNumbers.innerHTML = numbersToRemember;
     secondsLeft.innerHTML = `Ti restano ${seconds} secondi per ricordarti questi numeri!`
+
+    if (seconds === 0) {
+      // Ferma countdown
+      clearInterval(countDown);
+      
+      // Scompaiono:
+      secondsLeft.classList.add('hidden');
+      randomNumbers.classList.add('hidden');
+
+      // Compaiono
+      guessNumber.classList.remove('hidden');
+      tryToGuess.classList.remove('hidden');
+      userGuess.classList.remove('hidden');
+      tryToGuess.innerHTML = `Prova ad indovinare`;
+      
+      userGuess.addEventListener('click', function() {
+
+        let userGuess = guessNumber.value;
+
+        userGuessArray = [];
+
+        userGuessArray.push(userGuess);
+
+        console.log(userGuessArray);
+
+      });
+
+    } else {
+      seconds--
+    }
     
   }, 1000);
   
-
 });
 
 
