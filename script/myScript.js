@@ -6,7 +6,7 @@
 const randomNumbers = document.getElementById('numbers');
 
 // Dichiarazione Start Timer
-const startTimer = document.getElementById('reminder');
+const secondsLeft = document.getElementById('reminder');
 
 // Dichiarazione tasto genera
 const generateButton = document.getElementById('generate');
@@ -22,8 +22,11 @@ generateButton.addEventListener('click', function() {
   
   countDown = setInterval(function() {
     
-    if (seconds === 0) {
+    if (seconds <= 1) {
       clearInterval(countDown);
+      
+      secondsLeft.classList.add('hidden');
+      randomNumbers.classList.add('hidden');
       
     } else {
       seconds--
@@ -31,7 +34,7 @@ generateButton.addEventListener('click', function() {
     
     // Mostra in html
     randomNumbers.innerHTML = numbersToRemember;
-    startTimer.innerHTML = `Ti restano ${seconds} secondi per ricordarti questi numeri!`
+    secondsLeft.innerHTML = `Ti restano ${seconds} secondi per ricordarti questi numeri!`
     
   }, 1000);
   
