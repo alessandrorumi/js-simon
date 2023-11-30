@@ -17,10 +17,24 @@ generateButton.addEventListener('click', function() {
   // Genera (5) numeri casuali (da 1 a 10)
   const numbersToRemember = getRandomNumbers(1, 100, 5);
 
-  // Mostra in html
-  startTimer.innerHTML = `Hai 30 secondi per ricordarti questi numeri!`
-  randomNumbers.innerHTML = numbersToRemember;
-
+  // Timer di 30 secondi
+  let seconds = 30;
+  
+  countDown = setInterval(function() {
+    
+    if (seconds === 0) {
+      clearInterval(countDown);
+      
+    } else {
+      seconds--
+    }
+    
+    // Mostra in html
+    randomNumbers.innerHTML = numbersToRemember;
+    startTimer.innerHTML = `Ti restano ${seconds} secondi per ricordarti questi numeri!`
+    
+  }, 1000);
+  
 
 });
 
