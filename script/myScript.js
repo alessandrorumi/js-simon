@@ -28,14 +28,15 @@ generateButton.addEventListener('click', function() {
 
   // Genera (5) numeri casuali (da 1 a 100)
   const numbersToRemember = getRandomNumbers(1, 100, 5);
+  console.log(numbersToRemember)
 
   // Timer di 30 secondi
-  let seconds = 5;
+  let seconds = 30;
 
   countDown = setInterval(function() {
     
     // Mostra in html
-    randomNumbers.innerHTML = numbersToRemember;
+    randomNumbers.innerHTML = numbersToRemember.join(' ');
     secondsLeft.innerHTML = `Ti restano ${seconds} secondi per ricordarti questi numeri!`
 
     if (seconds === 0) {
@@ -52,26 +53,37 @@ generateButton.addEventListener('click', function() {
       userGuess.classList.remove('hidden');
       tryToGuess.innerHTML = `Prova ad indovinare`;
       
-      userGuess.addEventListener('click', function() {
-
-        let userGuess = guessNumber.value;
-
-        userGuessArray = [];
-
-        userGuessArray.push(userGuess);
-
-        console.log(userGuessArray);
-
-      });
-
     } else {
       seconds--
     }
     
   }, 1000);
   
-});
+  userGuess.addEventListener('click', function() {
+    
+    // Ottieni l'input dell'utente come stringa
+    const userGuessString = guessNumber.value;
+  
+    // Converti la stringa in un array di numeri
+    const userGuessArray = userGuessString.split(' ').map(Number);
+  
+    // Confronta i numeri e determina quelli corretti
+    const correctNumbers = [];
 
+    for (let i = 0; i < userGuessArray.length; i++) {
+      const userNumber = userGuessArray[i];
+
+      if (numbersToRemember.includes(userNumber)) {
+        correctNumbers.push(userNumber);
+      }
+    }
+
+    // Mostra il risultato all'utente
+    tryToGuess.innerHTML = `Hai indovinato ${correctNumbers.length} numero/i: ${correctNumbers.join(', ')}`;
+    
+  });
+  
+});
 
 
 
